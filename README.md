@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Krast76/go-transmission.svg?branch=master)](https://travis-ci.org/Krast76/go-transmission)
+
 # Go Transmission
 Golang lib for Transmission API
 
