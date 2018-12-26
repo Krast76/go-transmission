@@ -132,6 +132,18 @@ func (ac *TransmissionClient) GetTorrents() (Torrents, error) {
 	return out.Arguments.Torrents, nil
 }
 
+//DeleteTorrent delete the torrent
+func (ac *TransmissionClient) DeleteTorrent(id int, removeFile bool) (string, error) {
+	cmd, err := NewDelCmd(id, removeFile)
+
+	out, err := ac.ExecuteCommand(cmd)
+	if err != nil {
+		panic(err)
+	}
+
+	return out.Result, nil
+}
+
 //StartTorrent start the torrent
 func (ac *TransmissionClient) StartTorrent(id int) (string, error) {
 	return ac.sendSimpleCommand("torrent-start", id)
