@@ -57,6 +57,8 @@ type Torrent struct {
 	HashString    string  `json:"hashString"`
 	Error         int     `json:"error"`
 	ErrorString   string  `json:"errorString"`
+	TotalSize     int     `json:"totalSize"`
+	Seeders       int     `json:"seeders"`
 }
 
 // Torrents represent []Torrent
