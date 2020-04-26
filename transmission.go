@@ -3,6 +3,7 @@ package transmission
 import (
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"sort"
 )
@@ -134,6 +135,17 @@ func (ac *TransmissionClient) GetTorrents() (Torrents, error) {
 	return out.Arguments.Torrents, nil
 }
 
+//GetTorrent by id
+func (ac *TransmissionClient) GetTorrent(id int) (Torrents, error) {
+	cmd, err := NewGetTorrentCmd(id)
+
+	out, err := ac.ExecuteCommand(cmd)
+	if err != nil {
+		return nil, err
+	}
+	return out.Arguments.Torrents, nil
+}
+
 //DeleteTorrent delete the torrent
 func (ac *TransmissionClient) DeleteTorrent(id int, removeFile bool) (string, error) {
 	cmd, err := NewDelCmd(id, removeFile)
@@ -160,6 +172,19 @@ func NewGetTorrentsCmd() (*Command, error) {
 	cmd := &Command{}
 
 	cmd.Method = "torrent-get"
+	cmd.Arguments.Fields = []string{"id", "name", "hashString",
+		"status", "addedDate", "leftUntilDone", "eta", "uploadRatio",
+		"rateDownload", "rateUpload", "downloadDir", "isFinished",
+		"percentDone", "seedRatioMode", "error", "errorString"}
+
+	return cmd, nil
+}
+
+func NewGetTorrentCmd(id int) (*Command, error) {
+	cmd := &Command{}
+
+	cmd.Method = "torrent-get"
+	cmd.Arguments.Ids = []int{id}
 	cmd.Arguments.Fields = []string{"id", "name", "hashString",
 		"status", "addedDate", "leftUntilDone", "eta", "uploadRatio",
 		"rateDownload", "rateUpload", "downloadDir", "isFinished",
@@ -232,7 +257,7 @@ func (ac *TransmissionClient) ExecuteCommand(cmd *Command) (*Command, error) {
 	if err != nil {
 		return out, err
 	}
-
+	fmt.Println(cmd)
 	return out, nil
 }
 

@@ -49,6 +49,19 @@ func TestGetTorrents(t *testing.T) {
 	})
 }
 
+func TestGetTorrent(t *testing.T) {
+	tSetup(`{"arguments":{"torrents":[{"eta":-1,"id":1,
+  "leftUntilDone":0,"name":"Test1",
+  "rateDownload":0,"rateUpload":0,"status":6,"uploadRatio":0.3114}]},
+  "result":"success"}`)
+	defer tTeardown()
+
+	Convey("Test get torrent", t, func() {
+		torrents, err := transmissionClient.GetTorrent(2)
+		So(err, ShouldBeNil)
+		So(len(torrents), ShouldEqual, 1)
+	})
+}
 func TestRemoveTorrent(t *testing.T) {
 	tSetup(`{"arguments":{},"result":"success"}`)
 	defer tTeardown()
