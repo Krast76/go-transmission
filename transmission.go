@@ -3,7 +3,6 @@ package transmission
 import (
 	"encoding/base64"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"sort"
 )
@@ -257,7 +256,6 @@ func (ac *TransmissionClient) ExecuteCommand(cmd *Command) (*Command, error) {
 	if err != nil {
 		return out, err
 	}
-	fmt.Println(cmd)
 	return out, nil
 }
 
